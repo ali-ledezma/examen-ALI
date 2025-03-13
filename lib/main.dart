@@ -1,42 +1,94 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+class Cliente {
+  final int idCliente;
+  final String nombre;
+  final String rfc;
+  final String correo;
+
+  Cliente({
+    required this.idCliente,
+    required this.nombre,
+    required this.rfc,
+    required this.correo,
+  });
+}
+
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Clientes'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClienteContainer(
+                cliente: Cliente(
+                  idCliente: 1,
+                  nombre: 'Juan Pérez',
+                  rfc: 'PEPJ800101XXX',
+                  correo: 'juan.perez@example.com',
+                ),
+                color: Colors.blue[100]!,
+              ),
+              SizedBox(height: 20),
+              ClienteContainer(
+                cliente: Cliente(
+                  idCliente: 2,
+                  nombre: 'María García',
+                  rfc: 'GAMM900202YYY',
+                  correo: 'maria.garcia@example.com',
+                ),
+                color: Colors.green[100]!,
+              ),
+            ],
+          ),
+        ),
       ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+class ClienteContainer extends StatelessWidget {
+  final Cliente cliente;
+  final Color color;
+
+  ClienteContainer({required this.cliente, required this.color});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
+    return Container(
+      width: 300,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('ID: ${cliente.idCliente}'),
+          Text('Nombre: ${cliente.nombre}'),
+          Text('RFC: ${cliente.rfc}'),
+          Text('Correo: ${cliente.correo}'),
+        ],
       ),
     );
   }
